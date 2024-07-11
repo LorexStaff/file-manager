@@ -34,7 +34,6 @@ const CreateFolderModal: React.FC<CreateFolderModalProps> = ({
 
   const handleSubmit = async () => {
     if (!name.trim() || !user?.token) {
-      // Обработайте случай, когда имя папки пустое или пользователь не авторизован
       return;
     }
     try {

@@ -4,7 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
 import RequireAuth from "./components/RequireAuth";
-import { DriveProvider } from "./context/DriveContext"; // Импорт DriveProvider
+import { DriveProvider } from "./context/DriveContext";
 
 const App: React.FC = () => {
   return (
