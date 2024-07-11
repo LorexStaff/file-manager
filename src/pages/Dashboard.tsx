@@ -13,7 +13,14 @@ import Header from "../components/Header";
 import api from "../services/driveService";
 
 const HomePage: React.FC = () => {
-  const { items, currentFolderId, fetchFolderContents } = useDrive();
+  const {
+    items,
+    currentFolderId,
+    folderPath,
+    fetchFolderContents,
+    updateFolderPath,
+    goBack,
+  } = useDrive();
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false);
   const [isCreateFileModalOpen, setIsCreateFileModalOpen] = useState(false);
   const [isEditFolderModalOpen, setIsEditFolderModalOpen] = useState(false);
@@ -22,7 +29,7 @@ const HomePage: React.FC = () => {
   const [isMoveFolderModalOpen, setIsMoveFolderModalOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState<string>("");
   const [selectedItemName, setSelectedItemName] = useState<string>("");
-  const [selectedFolderName, setSelectedFolderName] = useState<string>("");
+  const [selectedFolderName] = useState<string>("");
   const [, setSelectedFile] = useState<File | null>(null);
 
   const { user } = useAuth();
@@ -30,6 +37,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (user?.token && currentFolderId) {
       fetchFolderContents(currentFolderId);
+      updateFolderPath(currentFolderId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.token, currentFolderId]);
@@ -81,7 +89,7 @@ const HomePage: React.FC = () => {
       fetchFolderContents(currentFolderId);
       setSelectedFile(null);
     } catch (error) {
-      console.error("Error uploading file", error);
+      console.error("Ошибка загрузки файла:", error);
     }
   };
 
@@ -89,9 +97,8 @@ const HomePage: React.FC = () => {
     if (!user?.token || folderId === newParentId) return;
     try {
       await api.moveFolder(folderId, newParentId, user.token);
-      setSelectedFolderName(folderId);
       fetchFolderContents(currentFolderId);
-      setIsMoveFolderModalOpen(true);
+      setIsMoveFolderModalOpen(false);
     } catch (error) {
       console.error("Ошибка при перемещении папки:", error);
     }
@@ -117,6 +124,11 @@ const HomePage: React.FC = () => {
           >
             Загрузить файл
           </Button>
+          {folderPath.length > 1 && (
+            <Button variant="contained" onClick={goBack}>
+              Назад
+            </Button>
+          )}
         </Stack>
         {items.map((item) =>
           item.type === "folder" ? (
@@ -163,7 +175,7 @@ const HomePage: React.FC = () => {
           }
           folders={items.filter((item) => item.type === "folder")}
           itemName={selectedFolderName}
-          currentFolderId={""}
+          currentFolderId={currentFolderId}
         />
       </Box>
     </>

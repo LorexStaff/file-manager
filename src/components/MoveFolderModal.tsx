@@ -17,7 +17,6 @@ interface MoveFolderModalProps {
   itemName: string;
   currentFolderId: string;
 }
-
 const MoveFolderModal: React.FC<MoveFolderModalProps> = ({
   isOpen,
   onClose,

@@ -75,6 +75,7 @@ const api = {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response);
       return response.data;
     } else {
       return Promise.reject("Пользователь не авторизован");
