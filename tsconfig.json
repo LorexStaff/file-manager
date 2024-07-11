@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "types": ["react", "react-router-dom", "axios", "@mui/material"]
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}
