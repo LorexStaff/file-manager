@@ -130,7 +130,7 @@ const HomePage: React.FC = () => {
               key={item.id}
               item={item}
               onEdit={handleEdit}
-              onMove={(id: string) => handleMoveFolder(id, item.name)} // Передайте имя
+              onMove={(id: string) => handleMoveFolder(id, item.name)}
               onDelete={handleDeleteItem}
             />
           ) : (
