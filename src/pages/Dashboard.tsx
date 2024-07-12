@@ -92,15 +92,10 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const handleMoveFolder = async (folderId: string, newParentId: string) => {
-    if (!user?.token || folderId === newParentId) return;
-    try {
-      await api.moveFolder(folderId, newParentId, user.token);
-      fetchFolderContents(currentFolderId);
-      setIsMoveFolderModalOpen(false);
-    } catch (error) {
-      console.error("Ошибка при перемещении папки:", error);
-    }
+  const handleMoveFolder = (folderId: string, name: string) => {
+    setSelectedFolderId(folderId);
+    setSelectedItemName(name);
+    setIsMoveFolderModalOpen(true);
   };
 
   return (
@@ -135,13 +130,14 @@ const HomePage: React.FC = () => {
               key={item.id}
               item={item}
               onEdit={handleEdit}
-              onMove={handleMoveFolder}
+              onMove={(id: string) => handleMoveFolder(id, item.name)} // Передайте имя
               onDelete={handleDeleteItem}
             />
           ) : (
             <FileItem key={item.id} item={item} onDelete={handleDeleteItem} />
           )
         )}
+
         <CreateFolderModal
           open={isCreateFolderModalOpen}
           onClose={() => setIsCreateFolderModalOpen(false)}
@@ -169,7 +165,7 @@ const HomePage: React.FC = () => {
         <MoveFolderModal
           isOpen={isMoveFolderModalOpen}
           onClose={() => setIsMoveFolderModalOpen(false)}
-          onMove={(newParentId) =>
+          onMove={async (newParentId) =>
             handleMoveFolder(selectedFolderId, newParentId)
           }
           folders={items.filter((item) => item.type === "folder")}
