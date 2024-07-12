@@ -13,7 +13,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 interface FileItemProps {
   item: DriveItem;
   onDelete: (id: string, name: string, type: string) => void;
-  name: string;
 }
 
 const FileItem: React.FC<FileItemProps> = ({ item, onDelete }) => {

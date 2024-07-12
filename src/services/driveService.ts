@@ -76,7 +76,7 @@ const api = {
         },
       });
       console.log(response);
-      return response.data;
+      return response.data.data;
     } else {
       return Promise.reject("Пользователь не авторизован");
     }

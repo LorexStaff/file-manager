@@ -29,7 +29,6 @@ const HomePage: React.FC = () => {
   const [isMoveFolderModalOpen, setIsMoveFolderModalOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState<string>("");
   const [selectedItemName, setSelectedItemName] = useState<string>("");
-  const [selectedFolderName] = useState<string>("");
   const [, setSelectedFile] = useState<File | null>(null);
 
   const { user } = useAuth();
@@ -158,7 +157,7 @@ const HomePage: React.FC = () => {
           open={isEditFolderModalOpen}
           onClose={() => setIsEditFolderModalOpen(false)}
           folderId={selectedFolderId}
-          folderName={selectedFolderName}
+          folderName={selectedItemName}
           onEdit={handleEdit}
         />
         <DeleteConfirmationModal
@@ -174,7 +173,7 @@ const HomePage: React.FC = () => {
             handleMoveFolder(selectedFolderId, newParentId)
           }
           folders={items.filter((item) => item.type === "folder")}
-          itemName={selectedFolderName}
+          itemName={selectedItemName}
           currentFolderId={currentFolderId}
         />
       </Box>
