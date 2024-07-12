@@ -9,21 +9,23 @@ import {
 } from "@mui/material";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FolderIcon from "@mui/icons-material/Folder";
 
-const FileItem: React.FC<{
+interface FileItemProps {
   item: DriveItem;
   onDelete: (id: string, name: string, type: string) => void;
-}> = ({ item, onDelete }) => {
+  name: string;
+}
+
+const FileItem: React.FC<FileItemProps> = ({ item, onDelete }) => {
   return (
     <ListItem disablePadding>
       <ListItemIcon>
-        {item.type === "file" ? <InsertDriveFileIcon /> : <FolderIcon />}
+        <InsertDriveFileIcon />
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography variant="body1" fontWeight="bold">
-            {item.name}
+            {item.file?.name}
           </Typography>
         }
       />
